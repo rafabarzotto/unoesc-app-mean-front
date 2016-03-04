@@ -2,33 +2,42 @@
     'use strict';
     
     angular
-        .module('brewery')
-        .controller('BreweryController', BreweryController);
+        .module('beer')
+        .controller('BeerController', BeerController);
     
-    BreweryController.$inject = ['BreweryService'];
+    BeerController.$inject = ['BeerService','BreweryService'];
     
-    function BreweryController(BreweryService) {
+    function BeerController(BeerService,BreweryService) {
         var vm = this;
         vm.empty = {};
         
         vm.findAll = function() {
-            BreweryService.findAll().then(function(response) {
-                vm.breweries = response.data;
+            BeerService.findAll().then(function(response) {
+                vm.beers = response.data;
             },function(error) {
                 console.error(error);
             });
         }
         vm.findAll();
         
+        vm.findAllBreweries = function() {
+            BreweryService.findAll().then(function(response) {
+                vm.breweries = response.data;
+            },function(error) {
+                console.error(error);
+            });
+        }
+        vm.findAllBreweries();
+        
         vm.reset = function() {
-            vm.brewery = angular.copy(vm.empty);
+            vm.beer = angular.copy(vm.empty);
         }
-        vm.populate = function(brewery) {
-            vm.brewery = angular.copy(brewery);
+        vm.populate = function(beer) {
+            vm.beer = angular.copy(beer);
         }
-        vm.save = function(brewery) {
-            if (brewery._id) {
-                BreweryService.update(brewery).then(function(response) {
+        vm.save = function(beer) {
+            if (beer._id) {
+                BeerService.update(beer).then(function(response) {
                     vm.success = response.data;
                     vm.findAll();
                     vm.reset();
@@ -37,7 +46,7 @@
                     vm.error = error.data;
                 });
             } else {
-                BreweryService.create(brewery).then(function(response) {
+                BeerService.create(beer).then(function(response) {
                     vm.success = response.data;
                     vm.findAll();
                     vm.reset();
@@ -47,9 +56,9 @@
                 });
             }
         }
-        vm.remove = function(brewery) {
-            if (confirm('Tem certeza que gostaria de remover a cervejaria ' + brewery.name + '?')) {
-                BreweryService.remove(brewery._id).then(function(response) {
+        vm.remove = function(beer) {
+            if (confirm('Tem certeza que gostaria de remover a cervejaria ' + beer.name + '?')) {
+                BeerService.remove(beer._id).then(function(response) {
                     vm.success = response.data;
                     vm.findAll();
                 }, function(error) {

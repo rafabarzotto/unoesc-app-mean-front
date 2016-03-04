@@ -2,14 +2,14 @@
     'use strict';
     
     angular
-        .module('brewery')
+        .module('beer')
         .config(Config);
     
     function Config($routeProvider) {
         $routeProvider
-            .when('/breweries', {
-                templateUrl: 'brewery/brewery.html',
-                controller: 'BreweryController',
+            .when('/beers', {
+                templateUrl: 'beer/beer.html',
+                controller: 'BeerController',
                 controllerAs: 'vm'
             });
     }

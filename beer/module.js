@@ -2,5 +2,5 @@
     'use strict';
     
     angular
-        .module('brewery', ['ngRoute']);
+        .module('beer', ['ngRoute']);
 })();
